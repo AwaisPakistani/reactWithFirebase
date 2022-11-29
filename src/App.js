@@ -14,14 +14,13 @@ class App extends React.Component{
     return(
      <div className='App'>
       <Router>
-     
-      <Suspense fallback={<h1>Loading.....</h1>}>
-        <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/about' element={<About />} />
-            <Route path='/authentication' element={<Authentication />} />
-        </Routes>
-      </Suspense>
+          <Suspense fallback={<h1>Loading.....</h1>}>
+            <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/about' element={<About />} />
+                <Route path='/authentication' element={<Authentication />} />
+            </Routes>
+          </Suspense>
       </Router>
         
            

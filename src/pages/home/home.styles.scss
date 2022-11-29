@@ -1,0 +1,47 @@
+*{
+    margin: 0px;
+}
+.master{
+    margin: 50px;
+}
+.upper-area{
+   display: flex;
+   flex-direction: row;
+   .add-button{
+      margin: 20px 30px;
+   }
+
+}
+.formArea{
+    display: flex;
+    margin: 30px;
+    input{
+        padding:10px;
+        margin: 10px;
+        border: 0px;
+        border-bottom: 1px solid green;
+        border-left: 1px solid green;
+        &:focus{
+            border:0px;
+        }
+    }
+    
+    button{
+        padding:10px;
+        margin: 10px;
+    }
+
+}
+.body-area{
+    background-color: white;
+    .table{
+        background-color: white;
+        .action-buttons{
+            
+            button{
+                margin: 5px;
+            }
+        }
+        
+    }
+}
