@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from "react";
-import Base from "../../components/base/base.component";
+import React, { useState, useEffect } from "react";
 import "./home.styles.scss";
+import Base from "../../components/base/base.component";
+import {collection,
+     getDocs,
+     addDoc,
+     updateDoc,
+     deleteDoc,
+     doc,} from "firebase/firestore";
 import { db } from "../../firebase/firebase";
-import {collection, getDocs, addDoc, updateDoc, deleteDoc, doc} from "firebase/firestore";
-import { async } from "@firebase/util";
 
 function Home(){
-        // for adding users
-        const [newName, setNewName]= useState("");
-        const [newAge, setNewAge]= useState(0);
+        
         // for get users
         const [users, setUsers]= useState([]);
         const usersCollectionRef=collection(db, "users");
-        // for adding users
-        const createUser=async()=>{
-           await addDoc(usersCollectionRef, {name: newName, age: Number(newAge)});
-        };
         // for deleting users
         const deleteUser=async(id)=>{
            const userDoc=doc(db,"users",id);
@@ -30,6 +28,15 @@ function Home(){
         };
          getUsers();
         },[]);
+        // for adding users
+       
+        const [newName,setNewName]=useState("");
+        const [newAge,setNewAge]=useState(0);
+        // for adding users
+        const createUser=async()=>{
+          await addDoc(usersCollectionRef, {name: newName, age: Number(newAge)});
+        };
+        const [count, setCount]=useState(1);
 
         return(
            <Base>
@@ -37,7 +44,7 @@ function Home(){
 
             <div className="upper-area">
                 <div className="add-button">
-                         <button className="btn btn-primary" type="button" data-toggle="collapse" data-target="#formAdd" aria-expanded="false" aria-controls="formAdd">
+                         <button className="btn btn-primary">
                             Add New +
                         </button>
                 </div>
@@ -45,17 +52,21 @@ function Home(){
             </div>
 
 
-            <div className="formArea" id="formAdd">
+            <div className="formArea">
                     <input 
+                    type="text"
                     placeholder="Name..."
                     onChange={(event)=>{
                         setNewName(event.target.value);
-                    }} />
+                    }}
+                     />
                     <input 
+                    type="number"
                     placeholder="Age..."
                     onChange={(event)=>{
                         setNewAge(event.target.value);
-                    }} />
+                    }}
+                     />
                     <button className="btn btn-success" onClick={createUser}>Add</button>
                 </div>
             <div className="body-area">
@@ -71,11 +82,15 @@ function Home(){
                         </thead>
                         <tbody>
                             {
-                                users.map((user)=>{
+                                users.map((user,count)=>{
+                                    var n=1;
                                     return (
 
                                     <tr>
-                                    <th scope="row">1</th>
+                                    <th scope="row">
+                                        
+                                        {count+1}
+                                    </th>
                                     <td>{user.name}</td>
                                     <td>{user.age}</td>
                                     <td className="action-buttons">
@@ -90,7 +105,10 @@ function Home(){
                                     </td>
                                     </tr>
                                     );
-                                })
+                                
+                                }
+                                
+                                )
                             }
                            
                         </tbody>

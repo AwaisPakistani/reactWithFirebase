@@ -1,12 +1,32 @@
-import React from "react";
+import React,{useState} from "react";
 import './signin.styles.scss';
+import {
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+ } from "firebase/auth";
+ import { auth } from "../../firebase/firebase";
+function SignIn(){
+    const [loginEmail, setLoginEmail]=useState("");
+    const [loginPassword, setLoginPassword]=useState(""); 
+    
+    
 
-class SignIn extends React.Component{
-    constructor(){
-        super();
-    }
+   
+   
+    const login=async()=>{
+       try{
+         const user= await signInWithEmailAndPassword(
+            auth,
+            loginEmail,
+            loginPassword,
+         );
+         console.log(user);
+       }catch(error){
+          console.log(error.message);
+       }
+    };
 
-    render(){
+    
         return(
 
             <div className="Sign-in">
@@ -14,15 +34,23 @@ class SignIn extends React.Component{
                     I already have an account
                 </h3>
                 <span className="sign">Sign In</span>
-                <form className="sign-in-form">
+                <div className="sign-in-form">
                     
-                    <input type="type" placeholder="Email..." />
-                    <input type="password" placeholder="Password..." />
+                <input type="email" placeholder="Email..."
+                onChange={(event)=>{
+                    setLoginEmail(event.target.value);
+                }}
+                />
+                <input type="password" placeholder="Password..."
+                onChange={(event)=>{
+                    setLoginPassword(event.target.value);
+                }}
+                />
 
-                    <button className="btn btn-primary">Login</button>
-                </form>
+                <button onClick={login} className="btn btn-primary">Login</button>
+                </div>
             </div>
         )
     }
-}
+
 export default SignIn;

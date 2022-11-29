@@ -1,11 +1,25 @@
-import React from "react";
+import React,{useState} from "react";
+import './header.styles.scss';
 import logo from '../../logo.svg';
 import { Link,NavLink } from "react-router-dom";
-import './header.styles.scss';
+import {
+    onAuthStateChanged,
+    signOut,
+ } from "firebase/auth";
+ import { auth } from "../../firebase/firebase";
 
+function Header() {
+    const [user, setUser]=useState({});
+    onAuthStateChanged(auth,(currentUser)=>{
+        setUser(currentUser);
+      });
+    const logout = async()=>{
+        await signOut(auth);
+    };
+     return (
+        <div className="header">
+                
 
-const Header = () =>(
-            <div className="header">
                 <div className="logo">
                   <Link to="/">
                   
@@ -21,12 +35,32 @@ const Header = () =>(
                 <div className="option">
                     <NavLink  to='#'>Contacts</NavLink >
                 </div>
+                {
+                    user?
+                    <div className="option">
+                    <button onClick={logout} className="btn btn-success">
+                        Logout
+                    </button>
+                </div>
+                :
                 <div className="option">
                     <NavLink  to='/authentication'>Sign IN</NavLink >
+
                 </div>
+                }
                 
+                
+                
+                <div className="option">
+                    {
+                       user?.email 
+                    }
+                </div>
+               
             </div>
-);
+     );
+}
+            
             
    
 export default Header;
