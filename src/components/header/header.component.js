@@ -38,17 +38,16 @@ function Header() {
                 {
                     user?
                     <div className="option">
-                    <button onClick={logout} className="btn btn-success">
-                        Logout
-                    </button>
-                </div>
+                        <NavLink onClick={logout}>
+                            Logout
+                        </NavLink>
+                       
+                   </div>
                 :
                 <div className="option">
                     <NavLink  to='/authentication'>Sign IN</NavLink >
-
                 </div>
                 }
-                
                 
                 
                 <div className="option">
@@ -56,6 +55,13 @@ function Header() {
                        user?.email 
                     }
                 </div>
+                <div className="option">
+                    
+                  <img src={localStorage.getItem('profilePic')} 
+                            width="30px" height="30px"/> 
+
+                </div>
+               
                
             </div>
      );

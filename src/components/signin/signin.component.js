@@ -1,4 +1,5 @@
 import React,{useState} from "react";
+import { signInWithGoogle } from "../../firebase/firebase";
 import './signin.styles.scss';
 import {
     signInWithEmailAndPassword,
@@ -32,6 +33,7 @@ function SignIn(){
             <div className="Sign-in">
                 <h3>
                     I already have an account
+                    
                 </h3>
                 <span className="sign">Sign In</span>
                 <div className="sign-in-form">
@@ -46,8 +48,11 @@ function SignIn(){
                     setLoginPassword(event.target.value);
                 }}
                 />
+               <div>
 
-                <button onClick={login} className="btn btn-primary">Login</button>
+                <button onClick={login} className="btn btn-primary">Login with Email</button>
+                <button onClick={signInWithGoogle} className="btn btn-primary">Login with Google</button>
+               </div>
                 </div>
             </div>
         )

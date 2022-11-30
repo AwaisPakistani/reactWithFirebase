@@ -4,9 +4,8 @@ import Base from "../../components/base/base.component";
 import {collection,
      getDocs,
      addDoc,
-     updateDoc,
      deleteDoc,
-     doc,} from "firebase/firestore";
+     doc} from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 
 function Home(){
