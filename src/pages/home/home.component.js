@@ -1,73 +1,59 @@
 import React, { useState, useEffect } from "react";
 import "./home.styles.scss";
 import Base from "../../components/base/base.component";
-import {collection,
-     getDocs,
-     addDoc,
-     deleteDoc,
-     doc} from "firebase/firestore";
 import { db } from "../../firebase/firebase";
+import {
+            collection,
+            getDocs,
+            addDoc,
+            deleteDoc,
+            updateDoc,
+            doc,
+       } from "firebase/firestore";
+import { Link } from "react-router-dom";
+
 
 function Home(){
         
-        // for get users
-        const [users, setUsers]= useState([]);
-        const usersCollectionRef=collection(db, "users");
+         // for get users
+         const [users, setUsers]= useState([]);
+         const usersCollectionRef = collection(db, "users");
+        // update age users
+        const updateUser=async(id,age)=>{
+           const userDoc=doc(db, "users", id);
+           const newFields={age:age+1};
+           updateDoc(userDoc, newFields);
+        };
         // for deleting users
         const deleteUser=async(id)=>{
-           const userDoc=doc(db,"users",id);
-           await deleteDoc(userDoc);
-        };
+            const userDoc=doc(db,"users",id);
+            await deleteDoc(userDoc);
+         };
+        const [count, setCount]=useState(1);
         // for get users
         useEffect(()=>{
-        const getUsers=async()=>{
-          const data= await getDocs(usersCollectionRef);
-          //console.log(data);
-          setUsers(data.docs.map((doc)=>({...doc.data(), id:doc.id})));
-        };
-         getUsers();
-        },[]);
-        // for adding users
-       
-        const [newName,setNewName]=useState("");
-        const [newAge,setNewAge]=useState(0);
-        // for adding users
-        const createUser=async()=>{
-          await addDoc(usersCollectionRef, {name: newName, age: Number(newAge)});
-        };
-        const [count, setCount]=useState(1);
-
+            const getUsers=async()=>{
+              const data= await getDocs(usersCollectionRef);
+              //console.log(data);
+              setUsers(data.docs.map((doc)=>({...doc.data(), id:doc.id})));
+            };
+             getUsers();
+            },[]);
         return(
            <Base>
            <div className="container master">
 
             <div className="upper-area">
                 <div className="add-button">
-                         <button className="btn btn-primary">
-                            Add New +
-                        </button>
+                         <span className="btn btn-primary">
+                            <Link to="/addcrud">
+                              Add New +
+                            </Link>
+                        </span>
                 </div>
                 
             </div>
 
-
-            <div className="formArea">
-                    <input 
-                    type="text"
-                    placeholder="Name..."
-                    onChange={(event)=>{
-                        setNewName(event.target.value);
-                    }}
-                     />
-                    <input 
-                    type="number"
-                    placeholder="Age..."
-                    onChange={(event)=>{
-                        setNewAge(event.target.value);
-                    }}
-                     />
-                    <button className="btn btn-success" onClick={createUser}>Add</button>
-                </div>
             <div className="body-area">
 
                 <table className="table">
@@ -93,7 +79,9 @@ function Home(){
                                     <td>{user.name}</td>
                                     <td>{user.age}</td>
                                     <td className="action-buttons">
-                                        <button className="btn btn-success">
+                                        <button onClick={()=>{
+                                            updateUser(user.id, user.age);
+                                        }} className="btn btn-success">
                                             Edit
                                         </button>
                                         <button onClick={()=>{

@@ -1,11 +1,11 @@
 import React, {lazy, Suspense} from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes , Route } from 'react-router-dom';
-import { Button, Badge } from 'react-bootstrap';
 import Base from './components/base/base.component';
 const Home=lazy(()=> import('./pages/home/home.component'));
 const About=lazy(()=> import('./pages/about/about.component'));
 const Authentication=lazy(()=> import('./pages/authentication/authentication.component'));
+const AddCrud=lazy(()=> import('././components/addcrud/addcrud.component'));
 class App extends React.Component{
   constructor(){
     super();
@@ -18,6 +18,7 @@ class App extends React.Component{
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/about' element={<About />} />
+                <Route path='/addcrud' element={<AddCrud />} />
                 <Route path='/authentication' element={<Authentication />} />
             </Routes>
           </Suspense>
