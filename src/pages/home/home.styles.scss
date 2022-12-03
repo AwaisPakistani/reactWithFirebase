@@ -40,6 +40,13 @@
     background-color: white;
     .table{
         background-color: white;
+        input{
+            padding: 10px;
+            border: 0px;
+           border-bottom: 1px solid green;
+           border-left: 1px solid green;
+        
+        }
         .action-buttons{
             
             button{

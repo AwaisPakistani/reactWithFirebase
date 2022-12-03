@@ -23,9 +23,10 @@ function Home(){
         const [editname, setEditName]=useState("");
         const [editAge, setEditAge]=useState(0);
         const updateUserDetail=async(id,name,age)=>{
-          const userDoc=doc(db, "users", id);
+          const usersDoc=doc(db, "users", id);
            const newFields={name:editname,age:editAge};
-           updateDoc(userDoc, newFields);
+           updateDoc(usersDoc, newFields);
+           alert('user updated');
         };
         // update age users
         const updateUser=async(id,age)=>{
@@ -104,24 +105,24 @@ function Home(){
                                     onChange={inputEditAge}
                                     /></td>
                                     <td className="action-buttons">
-                                        <button onClick={updateUserDetail(user.id)} className="btn btn-warning">
+                                        <button onClick={()=>{
+                                            updateUserDetail(user.id,user.name,user.age)
+                                        }} className="btn btn-success">
                                             Edit
                                         </button>
                                         
                                        
-                                        <button onClick={()=>{
+                                        {/* <button onClick={()=>{
                                             updateUser(user.id, user.age);
-                                        }} className="btn btn-success">
+                                        }} className="btn btn-warning">
                                             Age+1
-                                        </button>
+                                        </button> */}
                                         <button onClick={()=>{
                                             deleteUser(user.id);
                                         }} className="btn btn-danger" >
                                             Delete
                                         </button>
-                                        <Link to={'/updaeuser/'+user.id}>
-                            About
-                        </Link>
+                                        
                                         
                                     </td>
                                     </tr>
