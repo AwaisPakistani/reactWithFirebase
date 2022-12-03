@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./home.styles.scss";
 import Base from "../../components/base/base.component";
+import { Link } from "react-router-dom";
 import { db } from "../../firebase/firebase";
 import {
             collection,
@@ -10,7 +11,7 @@ import {
             updateDoc,
             doc,
        } from "firebase/firestore";
-import { Link } from "react-router-dom";
+
 
 
 function Home(){
@@ -18,12 +19,29 @@ function Home(){
          // for get users
          const [users, setUsers]= useState([]);
          const usersCollectionRef = collection(db, "users");
+        // for update
+        const [editname, setEditName]=useState("");
+        const [editAge, setEditAge]=useState(0);
+        const updateUserDetail=async(id,name,age)=>{
+          const userDoc=doc(db, "users", id);
+           const newFields={name:editname,age:editAge};
+           updateDoc(userDoc, newFields);
+        };
         // update age users
         const updateUser=async(id,age)=>{
            const userDoc=doc(db, "users", id);
            const newFields={age:age+1};
            updateDoc(userDoc, newFields);
         };
+        const inputEditName=(event)=>{
+            event.preventDefault();
+            setEditName(event.target.value);
+        }
+        const inputEditAge=(event)=>{
+            event.preventDefault();
+            setEditAge(event.target.value);
+        }
+        
         // for deleting users
         const deleteUser=async(id)=>{
             const userDoc=doc(db,"users",id);
@@ -47,9 +65,10 @@ function Home(){
                 <div className="add-button">
                          <span className="btn btn-primary">
                             <Link to="/addcrud">
-                              Add New +
+                              Add New
                             </Link>
                         </span>
+                        
                 </div>
                 
             </div>
@@ -59,7 +78,7 @@ function Home(){
                 <table className="table">
                         <thead>
                             <tr>
-                            <th scope="col">#</th>
+                            <th scope="col"></th>
                             <th scope="col">Name</th>
                             <th scope="col">Age</th>
                             <th scope="col">Action</th>
@@ -68,7 +87,7 @@ function Home(){
                         <tbody>
                             {
                                 users.map((user,count)=>{
-                                    var n=1;
+                                
                                     return (
 
                                     <tr>
@@ -76,19 +95,34 @@ function Home(){
                                         
                                         {count+1}
                                     </th>
-                                    <td>{user.name}</td>
-                                    <td>{user.age}</td>
+                                    <td><input type="text"
+                                    placeholder={user.name}
+                                    onChange={inputEditName}
+                                    /></td>
+                                    <td><input type="number"
+                                    placeholder={user.age}
+                                    onChange={inputEditAge}
+                                    /></td>
                                     <td className="action-buttons">
+                                        <button onClick={updateUserDetail(user.id)} className="btn btn-warning">
+                                            Edit
+                                        </button>
+                                        
+                                       
                                         <button onClick={()=>{
                                             updateUser(user.id, user.age);
                                         }} className="btn btn-success">
-                                            Edit
+                                            Age+1
                                         </button>
                                         <button onClick={()=>{
                                             deleteUser(user.id);
                                         }} className="btn btn-danger" >
                                             Delete
                                         </button>
+                                        <Link to={'/updaeuser/'+user.id}>
+                            About
+                        </Link>
+                                        
                                     </td>
                                     </tr>
                                     );

@@ -7,24 +7,38 @@ import {
     doc,
 } from "firebase/firestore";
 import './addcrud.styles.scss';
+import { auth } from "../../firebase/firebase";
 
 function AddCrud(){
-         const [addname, addingName]=useState("");
-         const [addage, addingAge]=useState(0);
+        
          // for get users
          const [users, setUsers]= useState([]);
-         const usersCollectionRef = collection(db, "users");
+         const usersCollection = collection(db, "users");
         // for adding users
-        const createUser=async()=>{
-          await addDoc(usersCollectionRef, {name: addname, age:Number(addage)});
-        };
+         const createUser=async(event)=>{
+            event.preventDefault();
+            await addDoc(usersCollection, {name: 
+            me, age:Number(age)});
+         };
+         const [me,name]=useState("");
+
+         const [age,meage]=useState(0);
+         const usename=(e)=>{
+            name(e.target.value);
+         }
+         const useage=(e)=>{
+            meage(e.target.value);
+         }
         
      return(
-        <Base>
+        <div>
             <div className="addcrud">
 
             <h3>
               Add Crud
+              {me}<br />
+              {age}
+              
             </h3>
             
             <div className="addcrud-form">
@@ -32,23 +46,18 @@ function AddCrud(){
             <input 
                     type="text"
                     placeholder="Name..."
-                    onChange={(event)=>{
-                        addingName(event.target.value);
-                    }}
+                    onChange={usename}
                      />
                     <input 
                     type="number"
                     placeholder="Age..."
-                    onChange={(event)=>{
-                        addingAge(event.target.value);
-                        
-                    }}
+                    onChange={useage}
                      />
                     <button className="btn btn-success" onClick={createUser}>Add</button>
             </div>
             </div>
     
-        </Base>
+        </div>
      );
 }
 export default AddCrud;

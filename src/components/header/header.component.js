@@ -10,11 +10,12 @@ import {
 
 function Header() {
     const [user, setUser]=useState({});
-    onAuthStateChanged(auth,(currentUser)=>{
-        setUser(currentUser);
-      });
+    //   onAuthStateChanged(auth,(currentUser)=>{
+    //     setUser(currentUser);
+    //   });
     const logout = async()=>{
         await signOut(auth);
+        localStorage.clear();
     };
      return (
         <div className="header">
@@ -56,9 +57,12 @@ function Header() {
                     }
                 </div>
                 <div className="option">
-                    
+                    {
+                    localStorage.getItem('profilePic')?
                   <img src={localStorage.getItem('profilePic')} 
                             width="30px" height="30px"/> 
+                            :<span></span>
+                    }
 
                 </div>
                
