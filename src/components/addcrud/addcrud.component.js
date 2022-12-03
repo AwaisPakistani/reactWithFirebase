@@ -19,6 +19,7 @@ function AddCrud(){
             event.preventDefault();
             await addDoc(usersCollection, {name: 
             me, age:Number(age)});
+            alert('User added');
          };
          const [me,name]=useState("");
 

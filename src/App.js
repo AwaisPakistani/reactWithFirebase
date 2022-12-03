@@ -7,7 +7,7 @@ const Home=lazy(()=> import('./pages/home/home.component'));
 const About=lazy(()=> import('./pages/about/about.component'));
 const Authentication=lazy(()=> import('./pages/authentication/authentication.component'));
 const AddUsers=lazy(()=> import('././pages/crudpages/add.component'));
-const EditCrud=lazy(()=> import('./components/editcrud/editcrud.component'));
+
 
 class App extends React.Component{
   constructor(){
@@ -19,10 +19,9 @@ class App extends React.Component{
       <Router>
           <Suspense fallback={<h1>Loading.....</h1>}>
             <Routes>
-                <Route index path='/' element={<Home />} />
+                <Route path='/' element={<Home />} />
                 <Route path='/about' element={<About />} />
                 <Route path='/addcrud' element={<AddUsers />} />
-                <Route path='/upateuser/id' element={<EditCrud />} />
                 <Route path='/authentication' element={<Authentication />} />
             </Routes>
           </Suspense>

@@ -10,9 +10,9 @@ import {
 
 function Header() {
     const [user, setUser]=useState({});
-    //   onAuthStateChanged(auth,(currentUser)=>{
-    //     setUser(currentUser);
-    //   });
+      onAuthStateChanged(auth,(currentUser)=>{
+        setUser(currentUser);
+      });
     const logout = async()=>{
         await signOut(auth);
         localStorage.clear();
